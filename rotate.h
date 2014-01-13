@@ -44,8 +44,9 @@ float** rotate (float** input, int M_in, int N_in)
             // pixel according to the dimensions set above and set the
             // resulting pixel.
             if (top >= 0 && bottom < M_in && left >= 0 && right < N_in ) {
-                float interpolated = interpolate(top, bottom, left, right,
-                    horizontal_position, vertical_position, greyscale_in);
+                float interpolated = bilinearly_interpolate(top, bottom, left,
+                    right, horizontal_position, vertical_position,
+                    greyscale_in);
                 output[row][col] = interpolated;
             }
         }
