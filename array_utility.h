@@ -11,6 +11,8 @@ Wang of Harvey Mudd's Department of Engineering (2013).
 #ifndef ARRAY_UTILITY_H
 #define ARRAY_UTILITY_H
 
+#include <stdio.h>
+
 char fname[50];
 FILE* fp;
 

@@ -1,10 +1,13 @@
 #include "resize.h"
 #include "bilinear_interpolation.h"
+#include "array_utility.h"
+
+#include <math.h>
 
 float** resize (float** input, int M_in, int N_in)
 {
     // Prompt the user.
-    float vert_resize_factor, horiz_resize_factor;
+    float verti_resize_factor, horiz_resize_factor;
     printf("By what factor do you want to scale your image horizontally?\n");
     scanf("%f", &horiz_resize_factor);
     printf("By what factor do you want to scale your image vertically?\n");

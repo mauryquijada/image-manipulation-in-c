@@ -1,5 +1,9 @@
 #include "array_utility.h"
+
 #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char fname[50];
 FILE* fp;

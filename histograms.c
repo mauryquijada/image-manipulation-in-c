@@ -1,4 +1,8 @@
 #include "histograms.h"
+#include "array_utility.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 // Helper function that returns the maximum value in an array of integers.
 int max_value (int* array, int num_elements)
@@ -27,7 +31,7 @@ float** generate_density_histogram (float** input, int size, int M_in,
 
     for (i = 0; i < M_in; i++) {
         for (j = 0; j < N_in; j++) {
-            count[(int) img[i][j]]++;
+            count[(int) input[i][j]]++;
         }
     }
 
