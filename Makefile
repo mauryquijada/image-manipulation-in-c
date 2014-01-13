@@ -1,10 +1,16 @@
+# Constants
+OBJECTS = array_utility.o bilinear_interpolation.o fourier_filter.o \
+	frequency_filter.o gradient_filter.o histogram_equalization.o \
+	histograms.o manipulate_hsi.o median_filter.o process.o resize.o \
+	rotate.o
+
 all:	process
 
 clean:
 	rm -rf *.0 *.dSYM process
 
-process: process.c
-	gcc -lm -g process.c -o process
+process: $(OBJECTS)
+	gcc -lm -g -o process $(OBJECTS)
 
 
 array_utility.o: array_utility.c array_utility.h
@@ -21,3 +27,4 @@ process.o: process.c array_utility.h rotate.h bilinear_interpolation.h \
   resize.h histograms.h
 resize.o: resize.c resize.h bilinear_interpolation.h
 rotate.o: rotate.c rotate.h bilinear_interpolation.h
+
