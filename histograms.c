@@ -20,7 +20,7 @@ int max_value (int* array, int num_elements)
 float** generate_density_histogram (float** input, int size, int M_in,
     int N_in)
 {
-    printf("Generating a density histogram...");
+    printf("Generating a density histogram...\n");
     // Instantiate counting variables used in for loops and the return
     // variable.
     int i, j;
@@ -66,7 +66,7 @@ float** generate_density_histogram (float** input, int size, int M_in,
 float** generate_cumulative_histogram (float** img, int size, int M_in,
     int N_in)
 {
-    printf("Generating a cumulative histogram...");
+    printf("Generating a cumulative histogram...\n");
 
     // Instantiate counting variables used in for loops and the return
     // variable.

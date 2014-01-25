@@ -8,41 +8,71 @@
 #include "histograms.h"
 #include "lodepng.h"
 
+float*** png_to_ppm (unsigned char* image, unsigned width, unsigned height)
+{
+	float*** img = alloc3df(3, height, width);
+
+  	int i, j;
+  	for (i = 0; i < height; i++) {
+  		for (j = 0; j < width; j++) {
+  			img[0][i][j] = image[3 * i * width + 3 * j + 0]; // Red.
+		    img[1][i][j] = image[3 * i * width + 3 * j + 1]; // Green.
+		    img[2][i][j] = image[3 * i * width + 3 * j + 2]; // Blue.
+  		}
+  	}
+
+  	return img;
+}
+unsigned char* ppm_to_png (float*** image, unsigned width, unsigned height)
+{
+	unsigned char* img = (unsigned char*) malloc(3 * width * height *
+		sizeof(unsigned char));
+
+  	int i, j;
+  	for (i = 0; i < height; i++) {
+  		for (j = 0; j < width; j++) {
+  			img[3 * i * width + 3 * j + 0] = image[0][i][j]; // Red.
+		    img[3 * i * width + 3 * j + 1] = image[1][i][j]; // Green.
+		    img[3 * i * width + 3 * j + 2] = image[2][i][j]; // Blue.
+  		}
+  	}
+
+  	return img;
+}
+
 int main ()
 {
-	int action = 0;
+	int action = 1;
 
-	char* filename;
+	char filename[256];
+	char saved_filename[256];
+
   	printf("Type in the name of the PNG file you would like to process.\n");
   	scanf("%s", filename);
 
+  	setbuf(stdout, NULL);
+
   	// Load the PNG using LodePNG library.
-  	// Ignoring Alpha values for now.
   	printf("Processing the file...\n\n\n");
   	unsigned error;
  	unsigned char* image;
   	unsigned width, height;
 
-  	error = lodepng_decode32_file(&image, &width, &height, filename);
+  	error = lodepng_decode24_file(&image, &width, &height, filename);
   	if (error) {
   		printf("Error (%u) loading file: %s\n", error, lodepng_error_text(error));
+  		exit(0);
   	}
 
 	// Then use array to load into a three-dimensional array of R, G, and B values.
-  	float*** img = alloc3df(3, height, width);
+  	float*** input = png_to_ppm(image, width, height);
+  	free(image);
 
-  	int i, j;
-  	int r, g, b, a;
-  	for (i = 0; i < height; i++) {
-  		for (j = 0; j < width; j++) {
-  			img[0][i][j] = image[4 * i * width + 4 * j + 0]; // Red.
-		    img[1][i][j] = image[4 * i * width + 4 * j + 1]; // Green.
-		    img[2][i][j] = image[4 * i * width + 4 * j + 2]; // Blue.
-		    // image[4 * i * width + 4 * j + 3]; is used to access alpha.
-  		}
-  	}
+    int i, j;
+	float*** output = (float ***) malloc(3 * sizeof(float**));
 
-  	while (action > -1) {
+  	// Begin coding the user prompt menu.
+  	while (action > 0) {
   		printf("Select how you would like to process this image: \n");
 	  	printf("1) Generate a density histogram for the image.\n");
 	  	printf("2) Generate a cumulative histogram for the image.\n");
@@ -58,18 +88,71 @@ int main ()
 	  	printf("12) Perform low-pass or high-pass filtering us a Fourier");
 	  	printf("transform.\n");
 	  	printf("13) Create a gradient image that accentuates changes in color");
-	  	printf("based on input.\n");
+	  	printf("based on the given image.\n");
 	  	printf("14) Clean up an image using a median filter.\n");
 	  	printf("15) Detect edges in an image.\n");
 
 
-	  	printf("Type in the number of the action you're interested in (-1 to exit): ");
+	  	printf("Type in the number of the action you're interested in ");
+	  	printf("(-1 to exit): ");
 	  	scanf("%d", &action);
 	  	printf("\n\n\n");
+
+	  	// Act according to what the user selected.
+	  	switch (action) {
+	  		case 1:
+	  			for (i = 0; i < 3; i++) {
+	  				output[i] = generate_density_histogram(input[i], 256, height,
+	  					width);
+	  			}
+
+	  			strncpy(saved_filename, filename, 256);
+	  			saved_filename[strlen(saved_filename) - 4] = 0;
+	  			strcat(saved_filename, "_histogram.png");
+	  			break;
+	  		case 2:
+	  			break;
+	  		case 3:
+	  			break;
+	  		case 4:
+	  			break;
+	  		case 5:
+	  			break;
+	  		case 6:
+	  			break;
+	  		case 7:
+	  			break;
+	  		case 8:
+	  			break;
+	  		case 9:
+	  			break;
+	  		case 10:
+	  			break;
+	  		case 11:
+	  			break;
+	  		case 12:
+	  			break;
+	  		case 13:
+	  			break;
+	  		case 14:
+	  			break;
+	  		case 15:
+	  			break;
+	  		default:
+	  			break;
+	  	}
+
+	  	if (action  > 0) {
+		  	// Save the file and indicate what the file was saved as.
+		  	unsigned char* output_png = ppm_to_png(output, 256, 256);
+			error = lodepng_encode24_file(saved_filename, output_png, 256, 256);
+			if (error) {
+		  		printf("Error (%u) saving file: %s\n\n\n", error, lodepng_error_text(error));
+		  	} else {
+		  		printf("The file was successfully saved as %s.\n\n\n", saved_filename);
+		  	}
+	  	}
   	}
 
-
-  	write_color_image("blah.ppm", img, height, width, 1);
-
-  	dealloc3df(img, 3, height, width);
+  	dealloc3df(input, 3, height, width);
 }
