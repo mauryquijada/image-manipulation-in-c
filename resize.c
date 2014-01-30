@@ -4,7 +4,8 @@
 
 #include <math.h>
 
-float** resize (float** input, int M_in, int N_in)
+float*** resize (float*** input, int M_in, int N_in, int* output_height,
+    int* output_width)
 {
     // Prompt the user.
     float verti_resize_factor, horiz_resize_factor;
@@ -17,13 +18,13 @@ float** resize (float** input, int M_in, int N_in)
 
     // Figure out the dimensions of the new, resized image and define the
     // new array.
-    int M_out_resized = M_in * verti_resize_factor;
-    int N_out_resized = N_in * horiz_resize_factor;
-    float** output = alloc2df(M_out_resized, N_out_resized);
+    int M_out_resized = *output_height = M_in * verti_resize_factor;
+    int N_out_resized = *output_width = N_in * horiz_resize_factor;
+    float*** output = alloc3df(3, M_out_resized, N_out_resized);
 
     // Loop through each pixel of the new image and interpolate the pixels
     // based on what's in the input image.
-    int i, j;
+    int i, j, k;
     for (i = 0; i < M_out_resized; ++i) {
         for (j = 0; j < N_out_resized; ++j) {
             // Figure out how far down or across (in percentage) we are with
@@ -48,10 +49,13 @@ float** resize (float** input, int M_in, int N_in)
             }
 
             // Interpolate the pixel according to the dimensions
-            // set above and set the resulting pixel.
-            float interpolated = bilinearly_interpolate(top, bottom, left,
-                right, horizontal_position, vertical_position, input);
-            output[i][j] = interpolated;
+            // set above and set the resulting pixel. Do so for each color.
+            for (k = 0; k < 3; k++) {
+                float interpolated = bilinearly_interpolate(top, bottom, left,
+                    right, horizontal_position, vertical_position, input[k]);
+                output[k][i][j] = interpolated;
+            }
+
         }
     }
 

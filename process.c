@@ -69,6 +69,7 @@ int main ()
   	free(image);
 
     int i, j;
+    int output_height, output_width;
 	float*** output = (float ***) malloc(3 * sizeof(float**));
 
   	// Begin coding the user prompt menu.
@@ -96,25 +97,41 @@ int main ()
 	  	printf("Type in the number of the action you're interested in ");
 	  	printf("(-1 to exit): ");
 	  	scanf("%d", &action);
-	  	printf("\n\n\n");
+	  	printf("------------------------------------------------------\n\n\n");
 
 	  	// Act according to what the user selected.
 	  	switch (action) {
 	  		case 1:
+	  			output_height = output_width = 256;
 	  			for (i = 0; i < 3; i++) {
-	  				output[i] = generate_density_histogram(input[i], 256, height,
-	  					width);
+	  				output[i] = generate_density_histogram(input[i],
+	  					output_height, height, width);
 	  			}
 
 	  			strncpy(saved_filename, filename, 256);
 	  			saved_filename[strlen(saved_filename) - 4] = 0;
-	  			strcat(saved_filename, "_histogram.png");
+	  			strcat(saved_filename, "_density_histogram.png");
 	  			break;
 	  		case 2:
+	  			output_height = output_width = 256;
+	  			for (i = 0; i < 3; i++) {
+	  				output[i] = generate_cumulative_histogram(input[i],
+	  					output_height, height, width);
+	  			}
+
+	  			strncpy(saved_filename, filename, 256);
+	  			saved_filename[strlen(saved_filename) - 4] = 0;
+	  			strcat(saved_filename, "_cumu_histogram.png");
 	  			break;
 	  		case 3:
 	  			break;
 	  		case 4:
+	  			 output = resize(input, height, width, &output_height,
+	  			 	&output_width);
+
+	  			strncpy(saved_filename, filename, 256);
+	  			saved_filename[strlen(saved_filename) - 4] = 0;
+	  			strcat(saved_filename, "_resized.png");
 	  			break;
 	  		case 5:
 	  			break;
@@ -142,10 +159,12 @@ int main ()
 	  			break;
 	  	}
 
-	  	if (action  > 0) {
+	  	if (action > 0) {
 		  	// Save the file and indicate what the file was saved as.
-		  	unsigned char* output_png = ppm_to_png(output, 256, 256);
-			error = lodepng_encode24_file(saved_filename, output_png, 256, 256);
+		  	unsigned char* output_png = ppm_to_png(output, output_width,
+		  		output_height);
+			error = lodepng_encode24_file(saved_filename, output_png,
+				output_width, output_height);
 			if (error) {
 		  		printf("Error (%u) saving file: %s\n\n\n", error, lodepng_error_text(error));
 		  	} else {
