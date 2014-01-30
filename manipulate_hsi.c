@@ -6,11 +6,11 @@
 #include <math.h>
 
 // This function is a rewritten version based off one given by Prof. Ruye
-// Wang of Harvey Mudd's Department of Engineering (2013). 
+// Wang of Harvey Mudd's Department of Engineering (2013).
 void rgb_to_hsi (float R, float G, float B, float* H, float* S, float* I)
 {
     float r, g, b, w, i, min=1.e-6;
-    *I = (i = R + G + B)/3.0; 
+    *I = (i = R + G + B)/3.0;
     r = R / i;
     g = G / i;
     b = B / i;
@@ -20,7 +20,7 @@ void rgb_to_hsi (float R, float G, float B, float* H, float* S, float* I)
         *H = 0;
     } else {
         w = 0.5 * (R - G + R - B) / sqrt((R - G)*(R - G) + (R - B)*(G - B));
-        
+
         if (w > 1) {
             w = 1;
         } else if(w < -1) {
@@ -33,19 +33,19 @@ void rgb_to_hsi (float R, float G, float B, float* H, float* S, float* I)
             printf("Error while converting to HSI (H < 0).");
             exit(1);
         }
-        
+
         if (B > G) {
             *H = 2 * 3.14159 - *H;
         }
-        
+
         if (r <= g && r <= b) {
             *S = 1 - 3 * r;
         }
-        
+
         if (g <= r && g <= b) {
             *S = 1 - 3 * g;
         }
-        
+
         if (b <= r && b <= g) {
             *S = 1 - 3 * b;
         }
@@ -53,7 +53,7 @@ void rgb_to_hsi (float R, float G, float B, float* H, float* S, float* I)
 }
 
 // This function is a rewritten version based off one given by Prof. Ruye
-// Wang of Harvey Mudd's Department of Engineering (2013). 
+// Wang of Harvey Mudd's Department of Engineering (2013).
 void hsi_to_rgb (float H, float S, float I, float* R, float* G, float* B)
 {
     float r, g, b;
@@ -78,7 +78,7 @@ void hsi_to_rgb (float H, float S, float I, float* R, float* G, float* B)
             r = (1 - S)/3;
             g = (1 + S*cos(H) / cos(3.14159/3-H)) / 3;
             b = 1 - r - g;
-	   } else if ((H >= 4*3.14159/3) && (H < 2*3.14159)) {
+       } else if ((H >= 4*3.14159/3) && (H < 2*3.14159)) {
             H = H - 4*3.14159/3;
             g = (1 - S)/3;
             b = (1 + S*cos(H) / cos(3.14159/3 - H)) / 3;
@@ -91,8 +91,8 @@ void hsi_to_rgb (float H, float S, float I, float* R, float* G, float* B)
         if (r < 0 || g < 0 || b < 0) {
             printf("Error: Given invalid R, G, B values (%f, %f, %f).", r , g,
                 b);
-	        exit(1);
-	    }
+            exit(1);
+        }
 
         if (r < 0) {
             r = 0;

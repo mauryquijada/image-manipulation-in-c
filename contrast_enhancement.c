@@ -6,27 +6,27 @@
 
 float*** enhance_contrast (float*** input, int M_in, int N_in)
 {
-	int option;
-	// Prompt the user.
-	printf("Which histogram stretch would you like to perform? (1) for");
-	printf(" a linear stretch, (2) for a 3%% min-max linear stretch.\n");
-	scanf("%d", &option);
+    int option;
+    // Prompt the user.
+    printf("Which histogram stretch would you like to perform? (1) for");
+    printf(" a linear stretch, (2) for a 3%% min-max linear stretch.\n");
+    scanf("%d", &option);
 
-	switch (option) {
-		case 2:
-			return min_max_stretch(input, M_in, N_in, 0.03);
-		default:
-			return linear_stretch(input, M_in, N_in);
-	}
+    switch (option) {
+        case 2:
+            return min_max_stretch(input, M_in, N_in, 0.03);
+        default:
+            return linear_stretch(input, M_in, N_in);
+    }
 }
 
 float*** linear_stretch (float*** input, int M_in, int N_in)
 {
-	// Define output.
-	float*** output = alloc3df(3, M_in, N_in);
-	float** densityHistogram;
+    // Define output.
+    float*** output = alloc3df(3, M_in, N_in);
+    float** densityHistogram;
 
-	int minColor, maxColor;
+    int minColor, maxColor;
     int i, j, k;
 
     // Linearly stretch for all colors.
@@ -37,7 +37,7 @@ float*** linear_stretch (float*** input, int M_in, int N_in)
 
         // Create a histogram of the input.
         densityHistogram = generate_density_histogram(input[k], 256,
-        	M_in, N_in);
+            M_in, N_in);
 
         // Find the minimum and maximum pixel using the original histogram by
         // looping through the columns and checking for the first row that
@@ -81,26 +81,26 @@ float*** linear_stretch (float*** input, int M_in, int N_in)
 
 float*** min_max_stretch (float*** input, int M_in, int N_in, double cutoff)
 {
-	// Define output.
-	float*** output = alloc3df(3, M_in, N_in);
-	float* density;
-	float* cumulative;
+    // Define output.
+    float*** output = alloc3df(3, M_in, N_in);
+    float* density;
+    float* cumulative;
 
-	int minColor, maxColor;
-	int i, j, k;
-	// Linearly stretch for all three colors.
-	for (k = 0; k < 3; k++) {
-		minColor = 0;
-		maxColor = 255;
+    int minColor, maxColor;
+    int i, j, k;
+    // Linearly stretch for all three colors.
+    for (k = 0; k < 3; k++) {
+        minColor = 0;
+        maxColor = 255;
 
-		// Define the density and cumulative distribution functions.
-		density = alloc1df(256);
-		cumulative = alloc1df(256);
+        // Define the density and cumulative distribution functions.
+        density = alloc1df(256);
+        cumulative = alloc1df(256);
 
-		// Define the weight of each pixel.
-		float weight = (float) 1.0 / M_in / N_in;
+        // Define the weight of each pixel.
+        float weight = (float) 1.0 / M_in / N_in;
 
-		for (i = 0; i < M_in; i++) {
+        for (i = 0; i < M_in; i++) {
             for (j = 0; j < N_in; j++) {
                 density[(int) input[k][i][j]] += weight;
             }
@@ -143,7 +143,7 @@ float*** min_max_stretch (float*** input, int M_in, int N_in, double cutoff)
         // Free memory.
         free(density);
         free(cumulative);
-	}
+    }
 
-	return output;
+    return output;
 }

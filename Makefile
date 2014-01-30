@@ -24,10 +24,11 @@ gradient_filter.o: gradient_filter.c
 histogram_equalization.o: histogram_equalization.c
 histograms.o: histograms.c histograms.h array_utility.h
 lodepng.o: lodepng.c lodepng.h
-manipulate_hsi.o: manipulate_hsi.c
+manipulate_hsi.o: manipulate_hsi.c manipulate_hsi.h
 median_filter.o: median_filter.c
 process.o: process.c array_utility.h rotate.h bilinear_interpolation.h \
-  resize.h histograms.h contrast_enhancement.h lodepng.h
+  resize.h histograms.h contrast_enhancement.h manipulate_hsi.h \
+  lodepng.h
 resize.o: resize.c resize.h bilinear_interpolation.h array_utility.h
 rotate.o: rotate.c rotate.h bilinear_interpolation.h array_utility.h
 
