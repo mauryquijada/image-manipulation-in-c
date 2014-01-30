@@ -5,6 +5,6 @@
 
 #include "bilinear_interpolation.h"
 
-float** rotate (float** input, int M_in, int N_in);
+float*** rotate (float*** input, int M_in, int N_in);
 
 #endif

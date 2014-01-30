@@ -126,6 +126,8 @@ int main ()
 	  		case 3:
 	  			break;
 	  		case 4:
+	  			output_height = height;
+	  			output_width = width;
 	  			 output = resize(input, height, width, &output_height,
 	  			 	&output_width);
 
@@ -134,6 +136,13 @@ int main ()
 	  			strcat(saved_filename, "_resized.png");
 	  			break;
 	  		case 5:
+	  			output_height = height;
+	  			output_width = width;
+	  			output = rotate(input, height, width);
+
+	  			strncpy(saved_filename, filename, 256);
+	  			saved_filename[strlen(saved_filename) - 4] = 0;
+	  			strcat(saved_filename, "_rotated.png");
 	  			break;
 	  		case 6:
 	  			break;
