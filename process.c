@@ -6,6 +6,7 @@
 #include "rotate.h"
 #include "resize.h"
 #include "histograms.h"
+#include "contrast_enhancement.h"
 #include "lodepng.h"
 
 float*** png_to_ppm (unsigned char* image, unsigned width, unsigned height)
@@ -124,11 +125,16 @@ int main ()
 	  			strcat(saved_filename, "_cumu_histogram.png");
 	  			break;
 	  		case 3:
-	  			break;
-	  		case 4:
 	  			output_height = height;
 	  			output_width = width;
-	  			 output = resize(input, height, width, &output_height,
+	  			output = enhance_contrast(input, height, width);
+
+	  			strncpy(saved_filename, filename, 256);
+	  			saved_filename[strlen(saved_filename) - 4] = 0;
+	  			strcat(saved_filename, "_with_contrast.png");
+	  			break;
+	  		case 4:
+	  			output = resize(input, height, width, &output_height,
 	  			 	&output_width);
 
 	  			strncpy(saved_filename, filename, 256);
