@@ -8,6 +8,7 @@
 #include "histograms.h"
 #include "contrast_enhancement.h"
 #include "manipulate_hsi.h"
+#include "histogram_equalization.h"
 #include "lodepng.h"
 
 float*** png_to_ppm (unsigned char* image, unsigned width, unsigned height)
@@ -155,6 +156,13 @@ int main ()
                 strcat(saved_filename, "_rotated.png");
                 break;
             case 6:
+                output_height = height;
+                output_width = width;
+                output = equalize(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_equalized.png");
                 break;
             case 7:
                 output_height = height;
@@ -164,7 +172,7 @@ int main ()
                 strncpy(saved_filename, filename, 256);
                 saved_filename[strlen(saved_filename) - 4] = 0;
                 strcat(saved_filename, "_rotated_hue.png");
-              break;
+                break;
             case 8:
                 output_height = height;
                 output_width = width;

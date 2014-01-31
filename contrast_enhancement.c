@@ -7,6 +7,7 @@
 float*** enhance_contrast (float*** input, int M_in, int N_in)
 {
     int option;
+
     // Prompt the user.
     printf("Which histogram stretch would you like to perform? (1) for");
     printf(" a linear stretch, (2) for a 3%% min-max linear stretch.\n");
