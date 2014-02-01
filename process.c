@@ -9,6 +9,7 @@
 #include "contrast_enhancement.h"
 #include "manipulate_hsi.h"
 #include "histogram_equalization.h"
+#include "kernel_filter.h"
 #include "lodepng.h"
 
 float*** png_to_ppm (unsigned char* image, unsigned width, unsigned height)

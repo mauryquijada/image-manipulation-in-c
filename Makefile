@@ -19,17 +19,17 @@ bilinear_interpolation.o: bilinear_interpolation.c \
 contrast_enhancement.o: contrast_enhancement.c contrast_enhancement.h \
   histograms.h array_utility.h
 fourier_filter.o: fourier_filter.c
-frequency_filter.o: frequency_filter.c
 gradient_filter.o: gradient_filter.c
 histogram_equalization.o: histogram_equalization.c \
   histogram_equalization.h array_utility.h
 histograms.o: histograms.c histograms.h array_utility.h
+kernel_filter.o: kernel_filter.c
 lodepng.o: lodepng.c lodepng.h
 manipulate_hsi.o: manipulate_hsi.c manipulate_hsi.h array_utility.h
 median_filter.o: median_filter.c
 process.o: process.c array_utility.h rotate.h bilinear_interpolation.h \
   resize.h histograms.h contrast_enhancement.h manipulate_hsi.h \
-  histogram_equalization.h lodepng.h
+  histogram_equalization.h kernel_filter.h lodepng.h
 resize.o: resize.c resize.h bilinear_interpolation.h array_utility.h
 rotate.o: rotate.c rotate.h bilinear_interpolation.h array_utility.h
 
