@@ -10,20 +10,23 @@
 #include "manipulate_hsi.h"
 #include "histogram_equalization.h"
 #include "kernel_filter.h"
+#include "gradient_filter.h"
+#include "fourier_filter.h"
+#include "edge_detection.h"
 #include "lodepng.h"
 
 float*** png_to_ppm (unsigned char* image, unsigned width, unsigned height)
 {
     float*** img = alloc3df(3, height, width);
 
-      int i, j;
-      for (i = 0; i < height; i++) {
-          for (j = 0; j < width; j++) {
-              img[0][i][j] = image[3 * i * width + 3 * j + 0]; // Red.
+    int i, j;
+    for (i = 0; i < height; i++) {
+        for (j = 0; j < width; j++) {
+            img[0][i][j] = image[3 * i * width + 3 * j + 0]; // Red.
             img[1][i][j] = image[3 * i * width + 3 * j + 1]; // Green.
             img[2][i][j] = image[3 * i * width + 3 * j + 2]; // Blue.
-          }
-      }
+        }
+    }
 
       return img;
 }
@@ -32,14 +35,14 @@ unsigned char* ppm_to_png (float*** image, unsigned width, unsigned height)
     unsigned char* img = (unsigned char*) malloc(3 * width * height *
         sizeof(unsigned char));
 
-      int i, j;
-      for (i = 0; i < height; i++) {
-          for (j = 0; j < width; j++) {
-              img[3 * i * width + 3 * j + 0] = image[0][i][j]; // Red.
+    int i, j;
+    for (i = 0; i < height; i++) {
+        for (j = 0; j < width; j++) {
+            img[3 * i * width + 3 * j + 0] = image[0][i][j]; // Red.
             img[3 * i * width + 3 * j + 1] = image[1][i][j]; // Green.
             img[3 * i * width + 3 * j + 2] = image[2][i][j]; // Blue.
-          }
-      }
+        }
+    }
 
       return img;
 }
@@ -193,16 +196,58 @@ int main ()
                 strcat(saved_filename, "_increased_intensity.png");
                 break;
             case 10:
+                output_height = height;
+                output_width = width;
+                output = lowpass_filter(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_lowpass_filter.png");
                 break;
             case 11:
+                output_height = height;
+                output_width = width;
+                output = highpass_filter(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_highpass_filter.png");
                 break;
             case 12:
+                output_height = height;
+                output_width = width;
+                output = fourier_filter(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_fourier_filter.png");
                 break;
             case 13:
+                output_height = height;
+                output_width = width;
+                output = gradient_filter(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_gradient_image.png");
                 break;
             case 14:
+                output_height = height;
+                output_width = width;
+                output = median_filter(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_median_filter.png");
                 break;
             case 15:
+                output_height = height;
+                output_width = width;
+                output = detect_edges(input, height, width);
+
+                strncpy(saved_filename, filename, 256);
+                saved_filename[strlen(saved_filename) - 4] = 0;
+                strcat(saved_filename, "_detected_edges.png");
                 break;
             default:
                 break;
