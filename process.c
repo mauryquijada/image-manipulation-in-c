@@ -103,7 +103,7 @@ int main ()
 
     // Begin coding the user prompt menu.
     while (action > 0) {
-        printf("Select how you would like to process this image: \n");
+        printf("Select how you would like to process %s: \n", filename);
         printf("1) Generate a density histogram for the image.\n");
         printf("2) Generate a cumulative histogram for the image.\n");
         printf("3) Improve the image's contrast.\n");
@@ -277,6 +277,7 @@ int main ()
             // Save the file and indicate what the file was saved as.
             unsigned char* output_png = ppm_to_png(output, output_width,
                 output_height);
+            dealloc3df(output, 3, output_height, output_width);
             error = lodepng_encode24_file(saved_filename, output_png,
                 output_width, output_height);
             if (error) {
@@ -290,5 +291,4 @@ int main ()
     }
 
     dealloc3df(input, 3, height, width);
-    dealloc3df(output, 3, output_height, output_width);
 }

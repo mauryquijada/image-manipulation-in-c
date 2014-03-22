@@ -21,7 +21,8 @@ contrast_enhancement.o: contrast_enhancement.c contrast_enhancement.h \
 edge_detection.o: edge_detection.c edge_detection.h array_utility.h \
   kernel_filter.h contrast_enhancement.h median_filter.h
 fourier_filter.o: fourier_filter.c fourier_filter.h array_utility.h
-gradient_filter.o: gradient_filter.c gradient_filter.h array_utility.h
+gradient_filter.o: gradient_filter.c gradient_filter.h array_utility.h \
+  kernel_filter.h
 histogram_equalization.o: histogram_equalization.c \
   histogram_equalization.h array_utility.h
 histograms.o: histograms.c histograms.h array_utility.h
