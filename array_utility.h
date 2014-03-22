@@ -22,9 +22,11 @@ double** alloc2dd (int m, int n);
 float* alloc1df (int n);
 float** alloc2df (int m, int n);
 float*** alloc3df (int l, int m, int n);
+float**** alloc4df (int k, int l, int m, int n);
 
 void dealloc2df (float** array, int m, int n);
 void dealloc3df (float*** array, int l, int m, int n);
+void dealloc4df (float**** array, int k, int l, int m, int n);
 
 int* alloc1di (int n);
 int** alloc2di (int m, int n);

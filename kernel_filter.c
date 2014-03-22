@@ -2,6 +2,7 @@
 #include "array_utility.h"
 
 #include <math.h>
+#include <stdio.h>
 
 // Array addition.
 float** add (float** arrayOne, float** arrayTwo, int row, int col)
@@ -111,12 +112,18 @@ float*** convolve (float*** input, int M_in, int N_in, float** kernel, int dim)
 
 float*** lowpass_filter(float*** input, int M_in, int N_in)
 {
-    return alloc3df(3, M_in, N_in);
+    // Inform the user.
+    printf("Performing a low-pass filter...\n");
+
+    return convolve(input, M_in, N_in, lowpass_filter_3by3kernel(), 3);
 }
 
 float*** highpass_filter(float*** input, int M_in, int N_in)
 {
-    return alloc3df(3, M_in, N_in);
+    // Inform the user.
+    printf("Performing a high-pass filter...\n");
+
+    return convolve(input, M_in, N_in, highpass_filter_3by3kernel(), 3);
 }
 
 float** lowpass_filter_3by3kernel()

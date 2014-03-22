@@ -15,8 +15,10 @@ float*** enhance_contrast (float*** input, int M_in, int N_in)
 
     switch (option) {
         case 2:
+            printf("Performing a 3%% min-max linear stretch...");
             return min_max_stretch(input, M_in, N_in, 0.03);
         default:
+            printf("Performing a linear histogram stretch...");
             return linear_stretch(input, M_in, N_in);
     }
 }

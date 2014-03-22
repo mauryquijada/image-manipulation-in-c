@@ -88,6 +88,23 @@ float*** alloc3df (int l, int m, int n)
     return array;
 }
 
+float**** alloc4df (int k, int l, int m, int n)
+{
+    int i;
+    float**** array;
+
+    if ((array = (float ****) malloc(k * sizeof(float***))) == NULL) {
+        printf("Unable to allocate memory for 4D float array...\n");
+        exit(0);
+    }
+
+    for (i = 0; i < k; i++) {
+        array[i] = alloc3df(l,m,n);
+    }
+
+    return array;
+}
+
 void dealloc2df (float** array, int m, int n)
 {
     int i;
@@ -103,6 +120,16 @@ void dealloc3df (float*** array, int l, int m, int n)
     int i;
     for (i = 0; i < l; i++) {
         dealloc2df(array[i], m, n);
+    }
+
+    free(array);
+}
+
+void dealloc4df (float**** array, int k, int l, int m, int n)
+{
+    int i;
+    for (i = 0; i < k; i++) {
+        dealloc3df(array[i], l, m, n);
     }
 
     free(array);
