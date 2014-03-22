@@ -93,7 +93,7 @@ float* find_cross_array (float** input, int M_in, int N_in,
     return cross_array;
 }
 
-float*** median_filter(float*** input, int M_in, int N_in)
+float*** median_filter (float*** input, int M_in, int N_in)
 {
     // Prompt the user.
     printf("What shape would you like to use for the median filter's window?");
@@ -116,7 +116,7 @@ float*** median_filter(float*** input, int M_in, int N_in)
     return output;
 }
 
-float*** square_median_filter(float*** input, int M_in, int N_in)
+float*** square_median_filter (float*** input, int M_in, int N_in)
 {
     // Declare output.
     float*** output = alloc3df(3, M_in, N_in);
@@ -154,7 +154,7 @@ float*** square_median_filter(float*** input, int M_in, int N_in)
     return output;
 }
 
-float*** cross_median_filter(float*** input, int M_in, int N_in)
+float*** cross_median_filter (float*** input, int M_in, int N_in)
 {
     // Declare output.
     float*** output = alloc3df(3, M_in, N_in);
