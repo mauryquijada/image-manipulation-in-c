@@ -99,10 +99,11 @@ int main ()
 
     int i, j;
     int output_height, output_width;
-    float*** output = (float ***) malloc(3 * sizeof(float**));
 
     // Begin coding the user prompt menu.
     while (action > 0) {
+        float*** output = (float ***) malloc(3 * sizeof(float**));
+
         printf("Select how you would like to process %s: \n", filename);
         printf("1) Generate a density histogram for the image.\n");
         printf("2) Generate a cumulative histogram for the image.\n");
